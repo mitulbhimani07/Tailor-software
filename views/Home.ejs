@@ -28,8 +28,8 @@
             <tr onclick="selectRow(this)" class="<%= i % 2 === 0 ? 'bg-white' : 'bg-gray-50' %> hover:bg-yellow-50 cursor-pointer transition duration-200">
               <td class="px-3 py-2 border-2"><%= tailor.mobile_no %></td>
               <td class="px-3 py-2 border-2 font-medium text-gray-900"><%= tailor.customer_name %></td>
-              <td class="px-3 py-2 border-2 font-medium text-gray-900"><%= tailor.start_Date ? tailor.start_Date.toISOString().slice(0,10) : '' %></td>
-              <td class="px-3 py-2 border-2 font-medium text-gray-900"><%= tailor.end_Date ? tailor.end_Date.toISOString().slice(0,10) : '' %></td>
+              <td class="px-2 py-2 border-2 font-medium text-gray-900"><%= tailor.start_Date ? tailor.start_Date.toISOString().slice(0,10) : '' %></td>
+              <td class="px-2 py-2 border-2 font-medium text-gray-900"><%= tailor.end_Date ? tailor.end_Date.toISOString().slice(0,10) : '' %></td>
               <td class="px-3 py-2 border-2"><%= tailor.topMeasurements?.garmentType %></td>
               <td class="px-3 py-2 border-2"><%= tailor.topMeasurements?.length %></td>
               <td class="px-3 py-2 border-2"><%= tailor.topMeasurements?.shoulder %></td>
