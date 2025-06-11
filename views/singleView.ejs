@@ -435,53 +435,40 @@
                 </div>
                 <div class="measurement-grid">
                     <div class="measurement-item">
-                        <span class="measurement-label">Length</span>
+                        <span class="measurement-label">લંબાઈ</span>
                         <span class="measurement-value"><%= tailor.topMeasurements?.length || '' %></span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Shoulder</span>
+                        <span class="measurement-label">સોલ્ડર</span>
                         <span class="measurement-value"><%= tailor.topMeasurements?.shoulder || '' %></span>
                     </div>
+                    
                     <div class="measurement-item">
-                        <span class="measurement-label">Sleeve Length</span>
-                        <span class="measurement-value"><%= tailor.topMeasurements?.sleeve?.length || '' %></span>
-                    </div>
-                    <div class="measurement-item">
-                        <span class="measurement-label">Sleeve Round</span>
+                        <span class="measurement-label">બાહી</span>
                         <span class="measurement-value">
-                            <%= [tailor.topMeasurements?.sleeve?.round1, tailor.topMeasurements?.sleeve?.round2].filter(Boolean).join(', ') %>
+                            <%= tailor.topMeasurements?.sleeve?.length %>,<%= tailor.topMeasurements?.sleeve?.round1 %>, <%= tailor.topMeasurements?.sleeve?.round2 %>
                         </span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Chest</span>
-                        <span class="measurement-value"><%= tailor.topMeasurements?.chest?.measurement || '' %></span>
+                        <span class="measurement-label">છાતી</span>
+                        <span class="measurement-value"><%= tailor.topMeasurements?.chest?.measurement %>,<%= tailor.topMeasurements?.chest?.loose %></span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Chest Loose</span>
-                        <span class="measurement-value"><%= tailor.topMeasurements?.chest?.loose || '' %></span>
+                        <span class="measurement-label">કમર</span>
+                        <span class="measurement-value"><%= tailor.topMeasurements?.waist?.measurement %>,<%= tailor.topMeasurements?.waist?.loose %></span>
                     </div>
+                   
                     <div class="measurement-item">
-                        <span class="measurement-label">Waist</span>
-                        <span class="measurement-value"><%= tailor.topMeasurements?.waist?.measurement || '' %></span>
-                    </div>
-                    <div class="measurement-item">
-                        <span class="measurement-label">Waist Loose</span>
-                        <span class="measurement-value"><%= tailor.topMeasurements?.waist?.loose || '' %></span>
-                    </div>
-                    <div class="measurement-item">
-                        <span class="measurement-label">Seat</span>
+                        <span class="measurement-label">સીટ</span>
                         <span class="measurement-value"><%= tailor.topMeasurements?.seat?.measurement || '' %></span>
                     </div>
+                  
                     <div class="measurement-item">
-                        <span class="measurement-label">Seat Loose</span>
-                        <span class="measurement-value"><%= tailor.topMeasurements?.seat?.loose || '' %></span>
-                    </div>
-                    <div class="measurement-item">
-                        <span class="measurement-label">Collar</span>
+                        <span class="measurement-label">કોલર</span>
                         <span class="measurement-value"><%= tailor.topMeasurements?.collar || '' %></span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Cuff</span>
+                        <span class="measurement-label">કફ</span>
                         <span class="measurement-value"><%= tailor.topMeasurements?.cuff || '' %></span>
                     </div>
                 </div>
@@ -494,43 +481,37 @@
                 </div>
                 <div class="measurement-grid">
                     <div class="measurement-item">
-                        <span class="measurement-label">Length</span>
+                        <span class="measurement-label">લંબાઈ</span>
                         <span class="measurement-value"><%= tailor.bottomMeasurements?.length || '' %></span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Waist</span>
-                        <span class="measurement-value"><%= tailor.bottomMeasurements?.waist?.measurement || '' %></span>
+                        <span class="measurement-label">કમર</span>
+                        <span class="measurement-value"><%= tailor.bottomMeasurements?.waist?.measurement || '' %>,<%= tailor.bottomMeasurements?.waist?.loose || '' %></span>
                     </div>
+                    
                     <div class="measurement-item">
-                        <span class="measurement-label">Waist Loose</span>
-                        <span class="measurement-value"><%= tailor.bottomMeasurements?.waist?.loose || '' %></span>
+                        <span class="measurement-label">સીટ</span>
+                        <span class="measurement-value"><%= tailor.bottomMeasurements?.seat?.measurement || '' %>,<%= tailor.bottomMeasurements?.seat?.loose || '' %></span>
                     </div>
+                    
                     <div class="measurement-item">
-                        <span class="measurement-label">Seat</span>
-                        <span class="measurement-value"><%= tailor.bottomMeasurements?.seat?.measurement || '' %></span>
-                    </div>
-                    <div class="measurement-item">
-                        <span class="measurement-label">Seat Loose</span>
-                        <span class="measurement-value"><%= tailor.bottomMeasurements?.seat?.loose || '' %></span>
-                    </div>
-                    <div class="measurement-item">
-                        <span class="measurement-label">Thigh</span>
+                        <span class="measurement-label">જાંગ</span>
                         <span class="measurement-value"><%= tailor.bottomMeasurements?.thigh || '' %></span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Knee</span>
+                        <span class="measurement-label">ગોઠણ</span>
                         <span class="measurement-value"><%= tailor.bottomMeasurements?.knee || '' %></span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Calf</span>
+                        <span class="measurement-label">પીડી</span>
                         <span class="measurement-value"><%= tailor.bottomMeasurements?.calf || '' %></span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Ankle</span>
+                        <span class="measurement-label">મોળી</span>
                         <span class="measurement-value"><%= tailor.bottomMeasurements?.ankle || '' %></span>
                     </div>
                     <div class="measurement-item">
-                        <span class="measurement-label">Front Rise</span>
+                        <span class="measurement-label">કી:</span>
                         <span class="measurement-value"><%= tailor.bottomMeasurements?.frontRise || '' %></span>
                     </div>
                 </div>
@@ -538,10 +519,15 @@
         </div>
 
         <!-- Notes Section -->
-        <div class="notes-section">
+        <div class="notes-section" >
             <div class="notes-title">Special Instructions:</div>
-            <div class="notes-content">
-                <%= tailor.topMeasurements?.notes || '' %>
+            <div class="notes-content"style="font-size: 12px;">
+                <h5>Top </h6>
+                => <%= tailor.topMeasurements?.notes || '' %>
+            </div>
+            <div class="notes-content"style="font-size: 12px;">
+                <h5>Bottom </h6>
+                => <%= tailor.bottomMeasurements?.notes || '' %>
             </div>
         </div>
 
