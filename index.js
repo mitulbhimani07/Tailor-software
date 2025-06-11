@@ -5,7 +5,15 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 const mongoose = require('mongoose');
 // MongoDB connection
-const database = require('./config/database');
+// const database = require('./config/database');
+mongoose.connect("mongodb+srv://meetkumartailor99048:g6EPjKQCCwlLvbJ8@cluster0.3mpwzsg.mongodb.net/Tailor")
+  .then(() => {
+    console.log("DB is Connected");
+  })
+  .catch((err) => {
+    console.log("Error connecting to the database:", err);
+  });
+
 
 // Set EJS as template engine
 app.set('view engine', 'ejs');
