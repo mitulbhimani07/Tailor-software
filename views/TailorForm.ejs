@@ -1,0 +1,574 @@
+<%- include('header') %>
+    <!DOCTYPE html>
+    <html lang="gu">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tailor Desk Account Software</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                font-size: 12px;
+                background: linear-gradient(135deg, #e6f3ff, #fff0e6, #f0ffe6, #ffe6f0);
+            }
+
+            .header {
+                background-color: #c0c0c0;
+                padding: 5px;
+                border-bottom: 1px solid #808080;
+            }
+
+            .title-bar {
+                background-color: #c0c0c0;
+                color: black;
+                padding: 3px 8px;
+                font-weight: normal;
+                text-align: center;
+                border: 1px outset #c0c0c0;
+            }
+
+            .menu-bar {
+                background-color: #e0e0e0;
+                border: 1px inset #e0e0e0;
+                padding: 2px;
+            }
+
+            .menu-item {
+                display: inline-block;
+                padding: 4px 12px;
+                margin: 1px;
+                background-color: #f0f0f0;
+                border: 1px outset #f0f0f0;
+                cursor: pointer;
+            }
+
+            .menu-item:hover {
+                background-color: #e8e8e8;
+            }
+
+            .tab-bar {
+                background-color: #e0e0e0;
+                padding: 2px;
+                border-bottom: 1px solid #808080;
+            }
+
+            .tab {
+                display: inline-block;
+                padding: 3px 8px;
+                margin-right: 2px;
+                background-color: #f0f0f0;
+                border: 1px outset #f0f0f0;
+                cursor: pointer;
+            }
+
+            .tab.active {
+                background-color: white;
+                border-bottom: 1px solid white;
+            }
+
+            .main-container {
+                padding: 10px;
+                background: inherit;
+            }
+
+            .customer-info {
+                margin-bottom: 15px;
+            }
+
+            .field-group {
+                display: inline-block;
+                margin-right: 20px;
+                vertical-align: top;
+            }
+
+            .field-label {
+                font-weight: bold;
+                margin-right: 5px;
+            }
+
+            .field-input {
+                border: 1px inset #c0c0c0;
+                padding: 2px;
+                background-color: white;
+            }
+
+            .measurements-container {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 20px;
+            }
+
+            .measurement-section {
+                flex: 1;
+            }
+
+            .section-title {
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #000080;
+            }
+
+            .measurement-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 3px;
+            }
+
+            .measurement-label {
+                width: 50px;
+                text-align: left;
+                margin-right: 10px;
+            }
+
+            .measurement-input {
+                width: 60px;
+                border: 1px inset #c0c0c0;
+                padding: 2px;
+                background-color: #f5f5dc;
+                text-align: center;
+            }
+
+            .measurement-input-small {
+                width: 40px;
+                margin-left: 5px;
+            }
+
+            .notes-area {
+                width: 300px;
+                height: 20px;
+                border: 1px inset #c0c0c0;
+                background-color: #f5f5dc;
+                margin-bottom: 10px;
+            }
+
+            .options-container {
+                display: flex;
+                gap: 20px;
+                margin-top: 10px;
+            }
+
+            .options-section {
+                flex: 1;
+            }
+
+            .checkbox-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px 15px;
+            }
+
+            .checkbox-item {
+                display: flex;
+                align-items: center;
+                font-size: 11px;
+            }
+
+            .checkbox-item input[type="checkbox"] {
+                margin-right: 3px;
+            }
+
+            .bottom-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: #e0e0e0;
+                border-top: 1px solid #808080;
+                padding: 5px;
+                display: flex;
+                gap: 10px;
+            }
+
+            .bottom-button {
+                padding: 2px 15px;
+                border: 1px outset #e0e0e0;
+                background-color: #e0e0e0;
+                cursor: pointer;
+            }
+
+            .dropdown {
+                border: 1px inset #c0c0c0;
+                background-color: white;
+                padding: 2px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form action="/addCustomers" method="POST">
+            <div class="title-bar">
+                Tailor Desk Account Software
+            </div>
+            <div class="main-container">
+                <div class="customer-info">
+                    <div class="field-group">
+                        <span class="field-label">MobileNo :</span>
+                        <input type="text" name="mobile_no" class="field-input" style="width: 260px;" />
+                    </div>
+                    
+                    <div class="field-group">
+                        <span class="field-label">Name :</span>
+                        <input type="text" name="customer_name" class="field-input" style="width: 260px;" required />
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">Date :</span>
+                        <input type="date" name="mobile_no" class="field-input" style="width: 120px;" />
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">Complete Date :</span>
+                        <input type="date" name="mobile_no" class="field-input" style="width: 120px;" />
+                    </div>
+                </div>
+
+                <div class="measurements-container">
+                    <div class="measurement-section">
+                        <div class="section-title">Top</div>
+                        <select name="topMeasurements[garmentType]" class="dropdown" style="width: 120px; margin-bottom: 10px;">
+                            <option value="SHIRT">SHIRT</option>
+                        </select>
+
+                        <div class="measurement-row">
+                            <span class="measurement-label">લંબાઈ</span>
+                            <input type="text" name="topMeasurements[length]" class="measurement-input" placeholder="Length" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">સોલ્ડર</span>
+                            <input type="text" name="topMeasurements[shoulder]" class="measurement-input" placeholder="Shoulder" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">બાહી</span>
+                            <input type="text" name="topMeasurements[sleeve][length]" class="measurement-input" placeholder="Sleeve" />
+                            <input type="text" name="topMeasurements[sleeve][round1]" class="measurement-input-small" placeholder="Round" />
+                            <input type="text" name="topMeasurements[sleeve][round2]" class="measurement-input-small" placeholder="Round" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">છાતી</span>
+                            <input type="text" name="topMeasurements[chest][measurement]" class="measurement-input" placeholder="Chest" />
+                            <input type="text" name="topMeasurements[chest][loose]" class="measurement-input-small" placeholder="Loose" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કમર</span>
+                            <input type="text" name="topMeasurements[waist][measurement]" class="measurement-input" placeholder="Waist" />
+                            <input type="text" name="topMeasurements[waist][loose]" class="measurement-input-small" placeholder="Loose" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">સીટ</span>
+                            <input type="text" name="topMeasurements[seat][measurement]" class="measurement-input" placeholder="Seat" />
+                            <input type="text" name="topMeasurements[seat][loose]" class="measurement-input-small" placeholder="Loose" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કોલર</span>
+                            <input type="text" name="topMeasurements[collar]" class="measurement-input" placeholder="Collar" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કફ</span>
+                            <input type="text" name="topMeasurements[cuff]" class="measurement-input" placeholder="Cuff" />
+                        </div>
+
+                        <textarea name="topMeasurements[notes]" class="notes-area" placeholder="Top notes"
+                            style="height: 50px;"></textarea>
+                    </div>
+
+                    <div class="measurement-section">
+                        <div class="section-title">Bottom</div>
+                        <select name="bottomMeasurements[garmentType]" class="dropdown" style="width: 120px; margin-bottom: 10px;">
+                            <option value="PANT">PANT</option>
+                        </select>
+
+                        <div class="measurement-row">
+                            <span class="measurement-label">લંબાઈ</span>
+                            <input type="text" name="bottomMeasurements[length]" class="measurement-input" placeholder="Length" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કમર</span>
+                            <input type="text" name="bottomMeasurements[waist][measurement]" class="measurement-input" placeholder="Waist" />
+                            <input type="text" name="bottomMeasurements[waist][loose]" class="measurement-input-small" placeholder="Loose" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">સીટ</span>
+                            <input type="text" name="bottomMeasurements[seat][measurement]" class="measurement-input" placeholder="Seat" />
+                            <input type="text" name="bottomMeasurements[seat][loose]" class="measurement-input-small" placeholder="Loose" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">જાંગ</span>
+                            <input type="text" name="bottomMeasurements[thigh]" class="measurement-input" placeholder="Thigh" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">ગોઠણ</span>
+                            <input type="text" name="bottomMeasurements[knee]" class="measurement-input" placeholder="Knee" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">પીડી</span>
+                            <input type="text" name="bottomMeasurements[calf]" class="measurement-input" placeholder="Calf" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">મોળી</span>
+                            <input type="text" name="bottomMeasurements[ankle]" class="measurement-input" placeholder="Ankle" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કી:</span>
+                            <input type="text" name="bottomMeasurements[frontRise]" class="measurement-input" placeholder="Front Rise" />
+                        </div>
+
+                        <textarea name="bottomMeasurements[notes]" class="notes-area" placeholder="Bottom notes"
+                            style="height: 50px;"></textarea>
+                    </div>
+                </div>
+
+                <div class="options-container">
+                    <div class="options-section">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item"
+                                style="background-color: rgba(216, 112, 147, 0.421); padding: 5px; color: blue; font-weight: bolder;">
+                                <input type="checkbox" name="options[]" value="ઓપન">
+                                <label>ઓપન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કટ_વાળી">
+                                <label>કટ વાળી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બુ_શર્ટ">
+                                <label>બુ શર્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બોમ્બે_પેટ્ટી">
+                                <label>બોમ્બે પેટ્ટી </label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ab">
+                                <label>A.B</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેન્ટ_ની_સ્ટેડ">
+                                <label>પેન્ટ ની સ્ટેડ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પોકેટ_મા_ગાજ_બટન">
+                                <label>પોકેટ મા ગાજ બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ફેન્સી_બટન">
+                                <label>ફેન્સી બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="લોગો">
+                                <label>લોગો</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="આડો_સોલ્ડર">
+                                <label>આડો સોલ્ડર</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પોકેટ_નહી">
+                                <label>પોકેટ નહી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેટન_કરવી_1">
+                                <label>પેટન કરવી 1</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="8_નાડા">
+                                <label>8 નાડા</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બોન_પોકેટ">
+                                <label>બોન પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પાછળ_વચ્ચે_ફિટિંગ">
+                                <label>પાછળ વચ્ચે ફિટિંગ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="સ્ટેન્ડ_કોલર_પોઇન્ટ_પાઇપિંગ">
+                                <label>સ્ટેન્ડ કોલર પોઇન્ટ પાઇપિંગ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="નાઈ_પોઈન્ટ">
+                                <label>નાઈ પોઈન્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કફ_ચોરસ">
+                                <label>કફ ચોરસ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પાછળ_2_ટક્ષ">
+                                <label>પાછળ 2 ટક્ષ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ફોડ_પેટ્ટી">
+                                <label>ફોડ પેટ્ટી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="V_સોલ્ડર">
+                                <label>V સોલ્ડર</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેલું_ગાજ">
+                                <label>પેલું ગાજ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="હાફ_બાઈ">
+                                <label>હાફ બાઈ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બાઈ_ની_પેટ્ટી_એ_ગાજ_બટન">
+                                <label>બાઈ ની પેટ્ટી એ ગાજ બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ચાઈનીઝ_કોલર">
+                                <label>ચાઈનીઝ કોલર</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કવર_સિલાઈ">
+                                <label>કવર સિલાઈ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બાયએ_બોમ્બે_પેટ્ટી">
+                                <label>બાયએ બોમ્બે પેટ્ટી </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="options-section">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ક્રોસ_પોકેટ">
+                                <label>ક્રોસ પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="2_પોકેટ">
+                                <label>2 પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="3_પોકેટ">
+                                <label>1 પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ગ્રીપ">
+                                <label>ગ્રીપ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ચીરવા_પેન્ટ">
+                                <label>ચીરવા પેન્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ફિક્સ_લુક્સ_હાથ_સિલાઈ_ગ્રીપ">
+                                <label>ફિક્સ લુક્સ હાથ સિલાઈ ગ્રીપ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="2_ચપટી_નાની">
+                                <label>2 ચપટી નાની</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="1_ચપટી_નાની">
+                                <label>1 ચપટી નાની</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="3_ચપટી_નાની">
+                                <label>3 ચપટી નાની</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="v_ચપટી">
+                                <label>V ચપટી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="L_પોકેટ">
+                                <label>L પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="2_વોચ_પોકેટ">
+                                <label>2 વોચ પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="વોચ_મોટી">
+                                <label>વોચ મોટી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કટ_બેલ્ટ">
+                                <label>કટ બેલ્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કટ_બેલ્ટ_ગાજ_બટન">
+                                <label>કટ બેલ્ટ ગાજ બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="લોન્ગ_બેલ્ટ_માં_ગાજ_બટન">
+                                <label>લોન્ગ બેલ્ટ માં ગાજ બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="મોબાઈલ_પોકેટ">
+                                <label>મોબાઈલ પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="લુપી_બટન">
+                                <label>લુપી બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="2_ચપટી_સાઈડ_પોકેટ">
+                                <label>2 ચપટી સાઈડ પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="આડી_ઈસ્ત્રી">
+                                <label>આડી ઈસ્ત્રી </label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="1_ક્વીજ_1_બટન">
+                                <label>1 ક્વીજ 1 બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="મોટી_બેલ્ટ">
+                                <label>મોટી બેલ્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેટર્ન_1">
+                                <label>પેટર્ન 1</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="8_નાકા">
+                                <label>8 નાકા</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ડબલ_સ્ટેડ_કાઢવી">
+                                <label>ડબલ સ્ટેડ કાઢવી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="L.H">
+                                <label>L.H</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેટ_છે.">
+                                <label>પેટ છે.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="options-section">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="સિંગલ_કવર_શો_બટન">
+                                <label>સિંગલ કવર શો બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="મોળી_એ_ફોલ્ડ">
+                                <label>મોળી એ ફોલ્ડ</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-bar">
+                <button type="submit" class="bottom-button">Save</button>
+                <button type="button" class="bottom-button" onclick="clearForm()">Clear</button>
+                <span style="margin-left: 20px;">Height:</span>
+                <input type="text" name="height" style="width: 60px; margin-left: 5px;" placeholder="Height">
+                <span style="margin-left: 20px;">Weight:</span>
+                <input type="text" name="weight" style="width: 60px; margin-left: 5px;" placeholder="Weight">
+                <span style="margin-left: 20px; font-weight: 800;">Total Amount:</span>
+                <input type="text" name="totalAmount" style="width: 80px;  margin-left: 5px;" placeholder="Amount">
+            </div>
+        </form>
+    </body>
+</html>

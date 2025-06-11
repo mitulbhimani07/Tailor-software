@@ -1,0 +1,567 @@
+<%- include('header') %>
+    <!DOCTYPE html>
+    <html lang="gu">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tailor Desk Account Software</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                font-size: 12px;
+                background: linear-gradient(135deg, #e6f3ff, #fff0e6, #f0ffe6, #ffe6f0);
+            }
+
+            .header {
+                background-color: #c0c0c0;
+                padding: 5px;
+                border-bottom: 1px solid #808080;
+            }
+
+            .title-bar {
+                background-color: #c0c0c0;
+                color: black;
+                padding: 3px 8px;
+                font-weight: normal;
+                text-align: center;
+                border: 1px outset #c0c0c0;
+            }
+
+            .menu-bar {
+                background-color: #e0e0e0;
+                border: 1px inset #e0e0e0;
+                padding: 2px;
+            }
+
+            .menu-item {
+                display: inline-block;
+                padding: 4px 12px;
+                margin: 1px;
+                background-color: #f0f0f0;
+                border: 1px outset #f0f0f0;
+                cursor: pointer;
+            }
+
+            .menu-item:hover {
+                background-color: #e8e8e8;
+            }
+
+            .tab-bar {
+                background-color: #e0e0e0;
+                padding: 2px;
+                border-bottom: 1px solid #808080;
+            }
+
+            .tab {
+                display: inline-block;
+                padding: 3px 8px;
+                margin-right: 2px;
+                background-color: #f0f0f0;
+                border: 1px outset #f0f0f0;
+                cursor: pointer;
+            }
+
+            .tab.active {
+                background-color: white;
+                border-bottom: 1px solid white;
+            }
+
+            .main-container {
+                padding: 10px;
+                background: inherit;
+            }
+
+            .customer-info {
+                margin-bottom: 15px;
+            }
+
+            .field-group {
+                display: inline-block;
+                margin-right: 20px;
+                vertical-align: top;
+            }
+
+            .field-label {
+                font-weight: bold;
+                margin-right: 5px;
+            }
+
+            .field-input {
+                border: 1px inset #c0c0c0;
+                padding: 2px;
+                background-color: white;
+            }
+
+            .measurements-container {
+                display: flex;
+                gap: 20px;
+                margin-bottom: 20px;
+            }
+
+            .measurement-section {
+                flex: 1;
+            }
+
+            .section-title {
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #000080;
+            }
+
+            .measurement-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 3px;
+            }
+
+            .measurement-label {
+                width: 50px;
+                text-align: left;
+                margin-right: 10px;
+            }
+
+            .measurement-input {
+                width: 60px;
+                border: 1px inset #c0c0c0;
+                padding: 2px;
+                background-color: #f5f5dc;
+                text-align: center;
+            }
+
+            .measurement-input-small {
+                width: 40px;
+                margin-left: 5px;
+            }
+
+            .notes-area {
+                width: 300px;
+                height: 20px;
+                border: 1px inset #c0c0c0;
+                background-color: #f5f5dc;
+                margin-bottom: 10px;
+            }
+
+            .options-container {
+                display: flex;
+                gap: 20px;
+                margin-top: 10px;
+            }
+
+            .options-section {
+                flex: 1;
+            }
+
+            .checkbox-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px 15px;
+            }
+
+            .checkbox-item {
+                display: flex;
+                align-items: center;
+                font-size: 11px;
+            }
+
+            .checkbox-item input[type="checkbox"] {
+                margin-right: 3px;
+            }
+
+            .bottom-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: #e0e0e0;
+                border-top: 1px solid #808080;
+                padding: 5px;
+                display: flex;
+                gap: 10px;
+            }
+
+            .bottom-button {
+                padding: 2px 15px;
+                border: 1px outset #e0e0e0;
+                background-color: #e0e0e0;
+                cursor: pointer;
+            }
+
+            .dropdown {
+                border: 1px inset #c0c0c0;
+                background-color: white;
+                padding: 2px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form action="/edit/<%= tailor._id %>" method="POST">
+            <div class="title-bar">
+                Tailor Desk Account Software
+            </div>
+            <div class="main-container">
+                <div class="customer-info">
+                    <div class="field-group">
+                        <span class="field-label">MobileNo :</span>
+                        <input type="text" name="mobile_no" class="field-input" style="width: 260px;"
+                            value="<%= tailor.mobile_no %>" />
+                    </div>
+
+                    <div class="field-group">
+                        <span class="field-label">Name :</span>
+                        <input type="text" name="customer_name" class="field-input" style="width: 260px;"
+                            value="<%= tailor.customer_name %>" required />
+                    </div>
+                </div>
+
+                <div class="measurements-container">
+                    <div class="measurement-section">
+                        <div class="section-title">Top</div>
+                        <select name="topMeasurements[garmentType]" class="dropdown" style="width: 120px; margin-bottom: 10px;">
+                            <option value="SHIRT" <%= tailor.topMeasurements?.garmentType === 'SHIRT' ? 'selected' : '' %>>SHIRT</option>
+                        </select>
+
+                        <!-- Example for Top Measurements -->
+                        <div class="measurement-row">
+                            <span class="measurement-label">લંબાઈ</span>
+                            <input type="text" name="topMeasurements[length]" class="measurement-input" placeholder="Length" value="<%= tailor.topMeasurements?.length || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">સોલ્ડર</span>
+                            <input type="text" name="topMeasurements[shoulder]" class="measurement-input" placeholder="Shoulder" value="<%= tailor.topMeasurements?.shoulder || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">બાહી</span>
+                            <input type="text" name="topMeasurements[sleeve][length]" class="measurement-input" placeholder="Sleeve" value="<%= tailor.topMeasurements?.sleeve?.length || '' %>" />
+                            <input type="text" name="topMeasurements[sleeve][round1]" class="measurement-input-small" placeholder="Round" value="<%= tailor.topMeasurements?.sleeve?.round1 || '' %>" />
+                            <input type="text" name="topMeasurements[sleeve][round2]" class="measurement-input-small" placeholder="Round" value="<%= tailor.topMeasurements?.sleeve?.round2 || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">છાતી</span>
+                            <input type="text" name="topMeasurements[chest][measurement]" class="measurement-input" placeholder="Chest" value="<%= tailor.topMeasurements?.chest?.measurement || '' %>" />
+                            <input type="text" name="topMeasurements[chest][loose]" class="measurement-input-small" placeholder="Loose" value="<%= tailor.topMeasurements?.chest?.loose || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કમર</span>
+                            <input type="text" name="topMeasurements[waist][measurement]" class="measurement-input" placeholder="Waist" value="<%= tailor.topMeasurements?.waist?.measurement || '' %>" />
+                            <input type="text" name="topMeasurements[waist][loose]" class="measurement-input-small" placeholder="Loose" value="<%= tailor.topMeasurements?.waist?.loose || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">સીટ</span>
+                            <input type="text" name="topMeasurements[seat][measurement]" class="measurement-input" placeholder="Seat" value="<%= tailor.topMeasurements?.seat?.measurement || '' %>" />
+                            <input type="text" name="topMeasurements[seat][loose]" class="measurement-input-small" placeholder="Loose" value="<%= tailor.topMeasurements?.seat?.loose || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કોલર</span>
+                            <input type="text" name="topMeasurements[collar]" class="measurement-input" placeholder="Collar" value="<%= tailor.topMeasurements?.collar || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કફ</span>
+                            <input type="text" name="topMeasurements[cuff]" class="measurement-input" placeholder="Cuff" value="<%= tailor.topMeasurements?.cuff || '' %>" />
+                        </div>
+
+                        <textarea name="topMeasurements[notes]"><%= tailor.topMeasurements?.notes || '' %></textarea>
+                    </div>
+
+                    <div class="measurement-section">
+                        <div class="section-title">Bottom</div>
+                        <select name="bottomMeasurements[garmentType]" class="dropdown" style="width: 120px; margin-bottom: 10px;">
+                            <option value="PANT">PANT</option>
+                        </select>
+
+                        <!-- Example for Bottom Measurements -->
+                        <div class="measurement-row">
+                            <span class="measurement-label">લંબાઈ</span>
+                            <input type="text" name="bottomMeasurements[length]" class="measurement-input" placeholder="Length" value="<%= tailor.bottomMeasurements?.length || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કમર</span>
+                            <input type="text" name="bottomMeasurements[waist][measurement]" class="measurement-input" placeholder="Waist" value="<%= tailor.bottomMeasurements?.waist?.measurement || '' %>" />
+                            <input type="text" name="bottomMeasurements[waist][loose]" class="measurement-input-small" placeholder="Loose" value="<%= tailor.bottomMeasurements?.waist?.loose || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">સીટ</span>
+                            <input type="text" name="bottomMeasurements[seat][measurement]" class="measurement-input" placeholder="Seat" value="<%= tailor.bottomMeasurements?.seat?.measurement || '' %>" />
+                            <input type="text" name="bottomMeasurements[seat][loose]" class="measurement-input-small" placeholder="Loose" value="<%= tailor.bottomMeasurements?.seat?.loose || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">જાંગ</span>
+                            <input type="text" name="bottomMeasurements[thigh]" class="measurement-input" placeholder="Thigh" value="<%= tailor.bottomMeasurements?.thigh || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">ગોઠણ</span>
+                            <input type="text" name="bottomMeasurements[knee]" class="measurement-input" placeholder="Knee" value="<%= tailor.bottomMeasurements?.knee || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">પીડી</span>
+                            <input type="text" name="bottomMeasurements[calf]" class="measurement-input" placeholder="Calf" value="<%= tailor.bottomMeasurements?.calf || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">મોળી</span>
+                            <input type="text" name="bottomMeasurements[ankle]" class="measurement-input" placeholder="Ankle" value="<%= tailor.bottomMeasurements?.ankle || '' %>" />
+                        </div>
+                        <div class="measurement-row">
+                            <span class="measurement-label">કી:</span>
+                            <input type="text" name="bottomMeasurements[frontRise]" class="measurement-input" placeholder="Front Rise" value="<%= tailor.bottomMeasurements?.frontRise || '' %>" />
+                        </div>
+                        <textarea name="bottomMeasurements[notes]" class="notes-area" placeholder="Bottom notes" style="height: 50px;"><%= tailor.bottomMeasurements?.notes || '' %></textarea>
+                    </div>
+                </div>
+
+                <div class="options-container">
+                    <div class="options-section">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item"
+                                style="background-color: rgba(216, 112, 147, 0.421); padding: 5px; color: blue; font-weight: bolder;">
+                                <input type="checkbox" name="options[]" value="ઓપન" <%= tailor.options && tailor.options.includes('ઓપન') ? 'checked' : '' %> >
+                                <label>ઓપન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કટ_વાળી" <%= tailor.options && tailor.options.includes('કટ_વાળી') ? 'checked' : '' %> >
+                                <label>કટ વાળી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બુ_શર્ટ" <%= tailor.options && tailor.options.includes('બુ_શર્ટ') ? 'checked' : '' %> >
+                                <label>બુ શર્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બોમ્બે_પેટ્ટી" <%= tailor.options && tailor.options.includes('બોમ્બે_પેટ્ટી') ? 'checked' : '' %> >
+                                <label>બોમ્બે પેટ્ટી </label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ab" <%= tailor.options && tailor.options.includes('ab') ? 'checked' : '' %> >
+                                <label>A.B</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેન્ટ_ની_સ્ટેડ" <%= tailor.options && tailor.options.includes('પેન્ટ_ની_સ્ટેડ') ? 'checked' : '' %> >
+                                <label>પેન્ટ ની સ્ટેડ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પોકેટ_મા_ગાજ_બટન" <%= tailor.options && tailor.options.includes('પોકેટ_મા_ગાજ_બટન') ? 'checked' : '' %> >
+                                <label>પોકેટ મા ગાજ બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ફેન્સી_બટન" <%= tailor.options && tailor.options.includes('ફેન્સી_બટન') ? 'checked' : '' %> >
+                                <label>ફેન્સી બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="લોગો" <%= tailor.options && tailor.options.includes('લોગો') ? 'checked' : '' %> >
+                                <label>લોગો</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="આડો_સોલ્ડર" <%= tailor.options && tailor.options.includes('આડો_સોલ્ડર') ? 'checked' : '' %> >
+                                <label>આડો સોલ્ડર</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પોકેટ_નહી" <%= tailor.options && tailor.options.includes('પોકેટ_નહી') ? 'checked' : '' %> >
+                                <label>પોકેટ નહી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેટન_કરવી_1" <%= tailor.options && tailor.options.includes('પેટન_કરવી_1') ? 'checked' : '' %> >
+                                <label>પેટન કરવી 1</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="8_નાડા" <%= tailor.options && tailor.options.includes('8_નાડા') ? 'checked' : '' %> >
+                                <label>8 નાડા</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બોન_પોકેટ" <%= tailor.options && tailor.options.includes('બોન_પોકેટ') ? 'checked' : '' %> >
+                                <label>બોન પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પાછળ_વચ્ચે_ફિટિંગ" <%= tailor.options && tailor.options.includes('પાછળ_વચ્ચે_ફિટિંગ') ? 'checked' : '' %> >
+                                <label>પાછળ વચ્ચે ફિટિંગ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="સ્ટેન્ડ_કોલર_પોઇન્ટ_પાઇપિંગ" <%= tailor.options && tailor.options.includes('સ્ટેન્ડ_કોલર_પોઇન્ટ_પાઇપિંગ') ? 'checked' : '' %> >
+                                <label>સ્ટેન્ડ કોલર પોઇન્ટ પાઇપિંગ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="નાઈ_પોઈન્ટ" <%= tailor.options && tailor.options.includes('નાઈ_પોઈન્ટ') ? 'checked' : '' %> >
+                                <label>નાઈ પોઈન્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કફ_ચોરસ" <%= tailor.options && tailor.options.includes('કફ_ચોરસ') ? 'checked' : '' %> >
+                                <label>કફ ચોરસ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પાછળ_2_ટક્ષ" <%= tailor.options && tailor.options.includes('પાછળ_2_ટક્ષ') ? 'checked' : '' %> >
+                                <label>પાછળ 2 ટક્ષ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ફોડ_પેટ્ટી" <%= tailor.options && tailor.options.includes('ફોડ_પેટ્ટી') ? 'checked' : '' %> >
+                                <label>ફોડ પેટ્ટી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="V_સોલ્ડર" <%= tailor.options && tailor.options.includes('V_સોલ્ડર') ? 'checked' : '' %> >
+                                <label>V સોલ્ડર</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેલું_ગાજ" <%= tailor.options && tailor.options.includes('પેલું_ગાજ') ? 'checked' : '' %> >
+                                <label>પેલું ગાજ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="હાફ_બાઈ" <%= tailor.options && tailor.options.includes('હાફ_બાઈ') ? 'checked' : '' %> >
+                                <label>હાફ બાઈ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બાઈ_ની_પેટ્ટી_એ_ગાજ_બટન" <%= tailor.options && tailor.options.includes('બાઈ_ની_પેટ્ટી_એ_ગાજ_બટન') ? 'checked' : '' %> >
+                                <label>બાઈ ની પેટ્ટી એ ગાજ બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ચાઈનીઝ_કોલર" <%= tailor.options && tailor.options.includes('ચાઈનીઝ_કોલર') ? 'checked' : '' %> >
+                                <label>ચાઈનીઝ કોલર</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કવર_સિલાઈ" <%= tailor.options && tailor.options.includes('કવર_સિલાઈ') ? 'checked' : '' %> >
+                                <label>કવર સિલાઈ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="બાયએ_બોમ્બે_પેટ્ટી" <%= tailor.options && tailor.options.includes('બાયએ_બોમ્બે_પેટ્ટી') ? 'checked' : '' %> >
+                                <label>બાયએ બોમ્બે પેટ્ટી </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="options-section">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ક્રોસ_પોકેટ" <%= tailor.options && tailor.options.includes('ક્રોસ_પોકેટ') ? 'checked' : '' %> >
+                                <label>ક્રોસ પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="2_પોકેટ" <%= tailor.options && tailor.options.includes('2_પોકેટ') ? 'checked' : '' %> >
+                                <label>2 પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="3_પોકેટ" <%= tailor.options && tailor.options.includes('3_પોકેટ') ? 'checked' : '' %> >
+                                <label>1 પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ગ્રીપ" <%= tailor.options && tailor.options.includes('ગ્રીપ') ? 'checked' : '' %> >
+                                <label>ગ્રીપ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ચીરવા_પેન્ટ" <%= tailor.options && tailor.options.includes('ચીરવા_પેન્ટ') ? 'checked' : '' %> >
+                                <label>ચીરવા પેન્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ફિક્સ_લુક્સ_હાથ_સિલાઈ_ગ્રીપ" <%= tailor.options && tailor.options.includes('ફિક્સ_લુક્સ_હાથ_સિલાઈ_ગ્રીપ') ? 'checked' : '' %> >
+                                <label>ફિક્સ લુક્સ હાથ સિલાઈ ગ્રીપ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="2_ચપટી_નાની" <%= tailor.options && tailor.options.includes('2_ચપટી_નાની') ? 'checked' : '' %> >
+                                <label>2 ચપટી નાની</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="1_ચપટી_નાની" <%= tailor.options && tailor.options.includes('1_ચપટી_નાની') ? 'checked' : '' %> >
+                                <label>1 ચપટી નાની</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="3_ચપટી_નાની" <%= tailor.options && tailor.options.includes('3_ચપટી_નાની') ? 'checked' : '' %> >
+                                <label>3 ચપટી નાની</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="v_ચપટી" <%= tailor.options && tailor.options.includes('v_ચપટી') ? 'checked' : '' %> >
+                                <label>V ચપટી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="L_પોકેટ" <%= tailor.options && tailor.options.includes('L_પોકેટ') ? 'checked' : '' %> >
+                                <label>L પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="2_વોચ_પોકેટ" <%= tailor.options && tailor.options.includes('2_વોચ_પોકેટ') ? 'checked' : '' %> >
+                                <label>2 વોચ પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="વોચ_મોટી" <%= tailor.options && tailor.options.includes('વોચ_મોટી') ? 'checked' : '' %> >
+                                <label>વોચ મોટી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કટ_બેલ્ટ" <%= tailor.options && tailor.options.includes('કટ_બેલ્ટ') ? 'checked' : '' %> >
+                                <label>કટ બેલ્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="કટ_બેલ્ટ_ગાજ_બટન" <%= tailor.options && tailor.options.includes('કટ_બેલ્ટ_ગાજ_બટન') ? 'checked' : '' %> >
+                                <label>કટ બેલ્ટ ગાજ બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="લોન્ગ_બેલ્ટ_માં_ગાજ_બટન" <%= tailor.options && tailor.options.includes('લોન્ગ_બેલ્ટ_માં_ગાજ_બટન') ? 'checked' : '' %> >
+                                <label>લોન્ગ બેલ્ટ માં ગાજ બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="મોબાઈલ_પોકેટ" <%= tailor.options && tailor.options.includes('મોબાઈલ_પોકેટ') ? 'checked' : '' %> >
+                                <label>મોબાઈલ પોકેટ </label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="લુપી_બટન" <%= tailor.options && tailor.options.includes('લુપી_બટન') ? 'checked' : '' %> >
+                                <label>લુપી બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="2_ચપટી_સાઈડ_પોકેટ" <%= tailor.options && tailor.options.includes('2_ચપટી_સાઈડ_પોકેટ') ? 'checked' : '' %> >
+                                <label>2 ચપટી સાઈડ પોકેટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="આડી_ઈસ્ત્રી" <%= tailor.options && tailor.options.includes('આડી_ઈસ્ત્રી') ? 'checked' : '' %> >
+                                <label>આડી ઈસ્ત્રી </label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="1_ક્વીજ_1_બટન" <%= tailor.options && tailor.options.includes('1_ક્વીજ_1_બટન') ? 'checked' : '' %> >
+                                <label>1 ક્વીજ 1 બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="મોટી_બેલ્ટ" <%= tailor.options && tailor.options.includes('મોટી_બેલ્ટ') ? 'checked' : '' %> >
+                                <label>મોટી બેલ્ટ</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેટર્ન_1" <%= tailor.options && tailor.options.includes('પેટર્ન_1') ? 'checked' : '' %> >
+                                <label>પેટર્ન 1</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="8_નાકા"   <%= tailor.options && tailor.options.includes('8_નાકા') ? 'checked' : '' %>>
+                                <label>8 નાકા</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="ડબલ_સ્ટેડ_કાઢવી" <%= tailor.options && tailor.options.includes('ડબલ_સ્ટેડ_કાઢવી') ? 'checked' : '' %>>
+                                <label>ડબલ સ્ટેડ કાઢવી</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="L.H" <%= tailor.options && tailor.options.includes('L.H') ? 'checked' : '' %>>
+                                <label>L.H</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="પેટ_છે" <%= tailor.options && tailor.options.includes('પેટ_છે') ? 'checked' : '' %>>
+                                <label>પેટ છે.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="options-section">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="સિંગલ_કવર_શો_બટન" <%= tailor.options && tailor.options.includes('સિંગલ_કવર_શો_બટન') ? 'checked' : '' %> >
+                                <label>સિંગલ કવર શો બટન</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="options[]" value="મોળી_એ_ફોલ્ડ" <%= tailor.options && tailor.options.includes('મોળી_એ_ફોલ્ડ') ? 'checked' : '' %> >
+                                <label>મોળી એ ફોલ્ડ</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-bar">
+                <button type="submit" class="bottom-button">Save</button>
+                <button type="button" class="bottom-button" onclick="clearForm()">Clear</button>
+                <span style="margin-left: 20px;">Height:</span>
+                <input type="text" name="height" style="width: 60px; margin-left: 5px;" placeholder="Height" value="<%= tailor.height || '' %>">
+                <span style="margin-left: 20px;">Weight:</span>
+                <input type="text" name="weight" style="width: 60px; margin-left: 5px;" placeholder="Weight" value="<%= tailor.weight || '' %>">
+                <span style="margin-left: 20px; font-weight: 800;">Total Amount:</span>
+                <input type="text" name="totalAmount" style="width: 80px;  margin-left: 5px;" placeholder="Amount" value="<%= tailor.totalAmount || '' %>">
+            </div>
+        </form>
+    </body>
+</html>
