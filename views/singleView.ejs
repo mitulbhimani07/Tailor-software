@@ -408,16 +408,12 @@
             <div class="bill-details">
                 <div class="info-title">Bill Details</div>
                 <div class="info-row">
-                    <span class="label">Bill No:</span>
-                    <span class="value"><%= tailor.billNo || '-' %></span>
-                </div>
-                <div class="info-row">
                     <span class="label">Date:</span>
-                    <span class="value"><%= tailor.date || '-' %></span>
+                    <span class="value"><%= tailor.start_Date ? tailor.start_Date.toISOString().slice(0,10) : '' %> %></span>
                 </div>
                 <div class="info-row">
                     <span class="label">Delivery Date:</span>
-                    <span class="value"><%= tailor.deliveryDate || '-' %></span>
+                    <span class="value"><%= tailor.end_Date ? tailor.end_Date.toISOString().slice(0,10) : ''%></span>
                 </div>
                 <div class="info-row">
                     <span class="label">Status:</span>

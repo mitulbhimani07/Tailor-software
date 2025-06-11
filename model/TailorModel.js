@@ -41,6 +41,14 @@ const TailorSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  start_Date: {
+    type: Date,
+    default: Date.now
+  },
+  end_Date: {
+    type: Date,
+    default: Date.now
+  },
   topMeasurements: measurementSchema,
   bottomMeasurements: {
     ...measurementSchema.obj,

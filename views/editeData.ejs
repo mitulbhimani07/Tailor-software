@@ -215,6 +215,14 @@
                         <input type="text" name="customer_name" class="field-input" style="width: 260px;"
                             value="<%= tailor.customer_name %>" required />
                     </div>
+                    <div class="field-group">
+                        <span class="field-label">Date :</span>
+                        <input type="date" name="start_Date" value="<%= tailor.start_Date ? tailor.start_Date.toISOString().slice(0,10) : '' %>" class="field-input" style="width: 120px;" />
+                    </div>
+                    <div class="field-group">
+                        <span class="field-label">Complete Date :</span>
+                        <input type="date" name="end_Date" value="<%= tailor.end_Date ? tailor.end_Date.toISOString().slice(0,10) : '' %>" class="field-input" style="width: 120px;" />
+                    </div>
                 </div>
 
                 <div class="measurements-container">
